@@ -1,0 +1,152 @@
+---
+title: "Modelling palaeoecological community data: a state-space approach"
+author: "Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson"
+institute: "UW-Madison"
+date: today
+bibliography: refs.bib
+from: markdown+emoji
+format:
+  revealjs:
+    theme: dark
+#    backgroundcolor: "#44444c"
+#    fontcolor: "white"
+    preview-links: true
+    highlight-style: github
+    slide-number: c/t
+    width: 1600
+    height: 900
+title-slide-attributes:
+  data-background-color: "#1a1e43"
+---
+
+
+## Palaeoecological data
+
+- Typically comprise mulitple time-series (response): 
+  - e.g., pollen, diatoms...
+- Include environmental covariates (predictors):
+  - e.g., isotopic data, lake level...
+
+
+Palaeoecological data pose many statistical challenges:
+
+- Time averaging
+- Uneven sampling through time
+- Measurement uncertainty
+- Relative abundances
+
+
+## Descriptive approaches
+
+Many descriptive approaches exist for analysing multivarivariate time-series:
+
+- Cluster analyses: CONISS
+- Ordination: PCA, NMDS...
+- Machine learning: MVRT, LDA (fancy cluster analyses)
+
+Descriptive methods allow us to establish patterns but not determine potential causes of those patterns.
+
+## Beyond pattern recognision
+
+The cutting edge in palaeoecology is to establish potential causes of observed patterns in species relative abundances. Are observed patterns driven by:
+
+- species interactions?
+- climate variability?
+- fire regime?
+
+No easy task!
+
+
+## State-space modelling
+
+State-space modelling attempts to predict the "true" unobservable state of a system from observable variables. It does so via two equations, one that models the _process of the system_:
+
+<br>
+Process equation:
+$$
+z_t = z_{t-1} + \epsilon_t,   \epsilon_t \sim N(0, \sigma^2_p)
+$$
+
+and one that models the _observations_ from the system:
+
+<br>
+
+Observation equation:
+$$
+y_t = z_y + n_t,   n_t \sim N(0, \sigma^2_o)
+$$
+
+## State-space modelling
+
+State-space modeling goes beyond descriptive approaches and attempts to estimate:
+
+- autoregressive processes
+- species interactions
+- species-environment interactione
+- combinations of the above
+
+Things get complicated when esimating multiple parameters simultaneously!
+
+## State-space modelling
+
+This variant of a state-space model:
+
+- uses a multinomial distribution: accepts raw count data
+- accepts multiple predictor data streams in the same model: e.g., isotopic data, charcoal accumulation rates...
+- simultaneously fits multiple coefficients
+- models autocorrelation structure
+- assess a range of possible causes of observed patterns
+
+
+## Empirical example
+
+Demonstrating a three-species model from Sunfish Pond:
+
+- unpublished data: not presenting the dataset, focusing on the modelling approach
+- In this example, the explanitory variable is time. I.e., we are looking at change in taxa over time. 
+- interested in abrupt transitions between dominant species
+
+```{r map}
+library(leaflet)
+m <- leaflet() %>%
+  setView(lng = -76.6990733, lat = 41.6433326, zoom = 5) %>%
+  addMarkers(lng = -76.6990733, lat = 41.6433326, popup="Sunfish Pond")
+m %>% addTiles()
+```
+
+## Empirical example
+
+```{r, plot}
+library(patchwork)
+two_spp_plt <- readRDS("./images/two_spp_plt.rds")
+two_spp_plt
+
+```
+
+
+## Simulation evaluation
+
+- We cannot determine the accuracy of fitted coefficients empirically from palaeoecological data. Experimental manipulation is challenging.
+
+- Simulation experiments are used to assess the success of recovering parameters:
+  1. data are simulated under known conditions with replication
+  2. the model is fit to the simulated replicate datasets
+  3. fitted models are assessed for how well input parameters are recovered
+
+## Simulation evaluation
+
+Example of recovering parameters for inter- intra- specific interactions:
+
+## Hypothesis testing
+
+We cannot determine with certainty, outside of simulation, causation from palaeo-data.
+
+What we can do is:
+- set up multiple working hypothese (Chamberlin)
+- couple descriptive methods with inferrential ones
+- assess which results lend support to the likelihood of each hypothesis being true
+
+
+
+## Acknowledgements
+
