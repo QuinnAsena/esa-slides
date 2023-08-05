@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.433">
 
   <meta name="author" content="Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson">
-  <meta name="dcterms.date" content="2023-08-02">
+  <meta name="dcterms.date" content="2023-08-05">
   <title>Modelling palaeoecological community data: a state-space approach</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -348,10 +348,30 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
     </div>
 </div>
 
-  <p class="date">2023-08-02</p>
+  <p class="date">2023-08-05</p>
 </section>
-<section id="palaeoecological-data" class="slide level2">
-<h2>Palaeoecological data</h2>
+<section id="is-the-past-recoverable-from-the-data" class="slide level2">
+<h2>Is the past recoverable from the data</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="slide_deck_files/figure-revealjs/vertical-spp-plot-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Palaeoecologists are concerned with questions such as:</p>
+<ul>
+<li>what are the drivers of community change?</li>
+<li>environment-species interactions?</li>
+<li>role of density dependence and species interactions?</li>
+<li>how can palaeoecological information inform present and future ecosystem states?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="palaeoecological-proxy-data" class="slide level2">
+<h2>Palaeoecological proxy data</h2>
 <ul>
 <li>Typically comprise mulitple time-series (response):
 <ul>
@@ -359,13 +379,13 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
 </ul></li>
 <li>Include environmental covariates (predictors):
 <ul>
-<li>e.g., isotopic data, lake level…</li>
+<li>e.g., isotopic data, charcoal data, lake level…</li>
 </ul></li>
 </ul>
 <p>Palaeoecological data pose many statistical challenges:</p>
 <ul>
-<li>Time averaging</li>
 <li>Uneven sampling through time</li>
+<li>Time averaging</li>
 <li>Measurement uncertainty</li>
 <li>Relative abundances</li>
 </ul>
@@ -378,86 +398,177 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
 <li>Ordination: PCA, NMDS…</li>
 <li>Machine learning: MVRT, LDA (fancy cluster analyses)</li>
 </ul>
-<p>Descriptive methods allow us to establish patterns but not determine potential causes of those patterns.</p>
+<p><br></p>
+<p><strong>Descriptive methods allow us to extract patterns from the data but not determine potential causes of those patterns.</strong></p>
+<p><em>Find image of cluster analysis</em></p>
 </section>
-<section id="beyond-pattern-recognision" class="slide level2">
-<h2>Beyond pattern recognision</h2>
-<p>The cutting edge in palaeoecology is to establish potential causes of observed patterns in species relative abundances. Are observed patterns driven by:</p>
+<section id="beyond-pattern-recognition" class="slide level2">
+<h2>Beyond pattern recognition</h2>
+<p>The cutting edge in palaeoecology is to establish potential causes of observed patterns in species relative abundances. For example, are observed patterns driven by:</p>
 <ul>
 <li>species interactions?</li>
 <li>climate variability?</li>
 <li>fire regime?</li>
+<li>…</li>
 </ul>
-<p>No easy task!</p>
+<p>This is what we want to know if we are to use palaeoecology to inform management of contemporary ecosystems or inform potential future ecosystem states. No easy task!</p>
 </section>
 <section id="state-space-modelling" class="slide level2">
 <h2>State-space modelling</h2>
-<p>State-space modelling attempts to predict the “true” unobservable state of a system from observable variables. It does so via two equations, one that models the <em>process of the system</em>:</p>
-<p><br> Process equation: <span class="math display">\[
-z_t = z_{t-1} + \epsilon_t,   \epsilon_t \sim N(0, \sigma^2_p)
-\]</span></p>
-<p>and one that models the <em>observations</em> from the system:</p>
-<p><br></p>
-<p>Observation equation: <span class="math display">\[
-y_t = z_y + n_t,   n_t \sim N(0, \sigma^2_o)
-\]</span></p>
+<p>State-space modelling goes beyond descriptive approaches and attempts to estimate:</p>
+<ul>
+<li>autoregressive / density dependent processes</li>
+<li>interspecific interactions (<span class="math inline">\(C\)</span> matrix)</li>
+<li>species-environment interactions (<span class="math inline">\(B\)</span> vector)</li>
+<li>combinations of the above</li>
+</ul>
 </section>
 <section id="state-space-modelling-1" class="slide level2">
 <h2>State-space modelling</h2>
-<p>State-space modeling goes beyond descriptive approaches and attempts to estimate:</p>
-<ul>
-<li>autoregressive processes</li>
-<li>species interactions</li>
-<li>species-environment interactione</li>
-<li>combinations of the above</li>
-</ul>
-<p>Things get complicated when esimating multiple parameters simultaneously!</p>
+<p>State-space modelling attempts to predict the “true” unobservable state of a system from observable variables. It does so via two equations, one that models the <em>process of the system</em>:</p>
+<p><br> Process equation:</p>
+<p><strong>Something not right here Tony…:</strong></p>
+<p><span class="math display">\[
+Y = B0 + C(Y - B0 - BX) + BX
+\]</span></p>
+<p>and one that models the <em>observations</em> from the system:</p>
+<p><br></p>
+<p>Observation equation:</p>
+<p><span class="math display">\[
+Y_t = Multinomial(z_t)
+\]</span></p>
 </section>
 <section id="state-space-modelling-2" class="slide level2">
 <h2>State-space modelling</h2>
-<p>This variant of a state-space model:</p>
+<p>State-space models are not new to ecology and have been used for:</p>
+<ul>
+<li>estimating animal populations</li>
+<li>animal movement</li>
+<li>plant cover data</li>
+<li>and much more</li>
+</ul>
+<p>However, state-space models are not well explored in palaeoecology.</p>
+</section>
+<section id="state-space-modelling-3" class="slide level2">
+<h2>State-space modelling</h2>
+<p>include eq on slide:</p>
+<p>This new variant of a state-space model:</p>
 <ul>
 <li>uses a multinomial distribution: accepts raw count data</li>
-<li>accepts multiple predictor data streams in the same model: e.g., isotopic data, charcoal accumulation rates…</li>
+<li>accepts multiple predictor data streams in the same model: e.g., isotopic data, charcoal accumulation rates, fungal spores…</li>
 <li>simultaneously fits multiple coefficients</li>
 <li>models autocorrelation structure</li>
-<li>assess a range of possible causes of observed patterns</li>
 </ul>
+<p>Can be used to assess a range of possible causes of observed patterns in palaeo-data.</p>
 </section>
 <section id="empirical-example" class="slide level2">
 <h2>Empirical example</h2>
-<p>Demonstrating a three-species model from Sunfish Pond:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Demonstrating a three-taxon model from Sunfish Pond:</p>
 <ul>
-<li>unpublished data: not presenting the dataset, focusing on the modelling approach</li>
-<li>In this example, the explanitory variable is time. I.e., we are looking at change in taxa over time.</li>
-<li>interested in abrupt transitions between dominant species</li>
+<li><p>unpublished data: not presenting the dataset, focusing on the modelling approach (Johnson <em>et al.,</em> unpub)</p></li>
+<li><p>ACES project interested in abrupt transitions between dominant species</p></li>
 </ul>
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-edc5a4663cf761af1b94" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-edc5a4663cf761af1b94">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-276774c547088a074ba7" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-276774c547088a074ba7">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </div>
 </div>
 </section>
+<section id="jonathon-johnson-jj" class="slide level2">
+<h2>Jonathon Johnson (JJ)</h2>
+
+<img data-src="./images/johnson-jonathan-2020.jpg" class="r-stretch quarto-figure-center"></section>
 <section id="empirical-example-1" class="slide level2">
 <h2>Empirical example</h2>
-
-<img data-src="slide_deck_files/figure-revealjs/plot-1.png" width="960" class="r-stretch"></section>
-<section id="simulation-evaluation" class="slide level2">
-<h2>Simulation evaluation</h2>
+<p>This example is a three-taxon model:</p>
 <ul>
-<li><p>We cannot determine the accuracy of coefficients empirically from palaeoecological data. Experimental manipulation is challenging.</p></li>
-<li><p>Simulation experiments are used to assess the success of recovering parameters.</p></li>
-<li><p>Data are simulated under known conditions with replication</p></li>
+<li>two focal species (<em>Betula</em> and <em>Quercus</em>)</li>
+<li>third ‘species’ is an aggregate of all other species</li>
+<li>we fit species interactions</li>
+<li>estimate species change through time</li>
 </ul>
+<p>Remember, this is a multinomial problem so the we do not estimate the aggregate species directly.</p>
+</section>
+<section id="time-forward-model-enables-even-intervals" class="slide level2">
+<h2>Time-forward model enables even intervals</h2>
+
+<img data-src="slide_deck_files/figure-revealjs/plot-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Johnson <em>et al.,</em> unpublished</p></section>
+<section id="empirical-example-estimates" class="slide level2">
+<h2>Empirical example estimates</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Estimates of species interactions:</p>
+<p><span class="math inline">\(C\)</span> matrix</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>              other      Quercus     Betula
+other   -0.07399272  0.000000000  0.0000000
+Quercus  0.00000000 -0.005562442  0.1214643
+Betula   0.00000000 -0.702066865 -0.4588237</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Columns are abundance and rows are change in abundance</p></li>
+<li><p>Density dependence on the diagonal</p></li>
+</ul>
+<p>(Quercus .99 means change in quercus i quercus-betula -0.7 means that abundance of quercus affects the change in betula abundance)</p>
+<p><br> Estimate of change over time</p>
+<p><span class="math inline">\(B\)</span> vector</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> other    Quercus     Betula
+     0 0.04790201 -0.5318416</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="slide_deck_files/figure-revealjs/verticalplot-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluating-the-model-with-simulated-data" class="slide level2">
+<h2>Evaluating the model with simulated data</h2>
+<ul>
+<li><p>We cannot determine the accuracy of fitted coefficients empirically from palaeoecological data.</p></li>
+<li><p>Simulation experiments are used to assess the success of recovering parameters:</p>
+<ol type="1">
+<li>data are simulated under known conditions with replication</li>
+<li>the model is fit to the simulated replicate datasets</li>
+<li>fitted models are assessed for how well input parameters are recovered</li>
+</ol></li>
+</ul>
+</section>
+<section id="evaluating-the-model-with-simulated-data-1" class="slide level2">
+<h2>Evaluating the model with simulated data</h2>
+<p>Replace with simulation results from betula quercus</p>
 </section>
 <section id="hypothesis-testing" class="slide level2">
 <h2>Hypothesis testing</h2>
+<p>Link back to parameters themselves</p>
 <p>We cannot determine with certainty, outside of simulation, causation from palaeo-data.</p>
-<p>What we can do is: - set up multiple working hypothese (Chamberlin) - couple descriptive methods with inferrential ones - assess which results lend support to the likelihood of each hypothesis being true</p>
+<p>What we can do is:</p>
+<ul>
+<li>set up multiple working hypothese (Chamberlin)</li>
+<li>couple descriptive methods with inferrential ones</li>
+<li>assess which results lend support to the likelihood of each hypothesis being true</li>
+</ul>
 </section>
 <section id="acknowledgements" class="slide level2">
 <h2>Acknowledgements</h2>
+<ul>
+<li>NSF logo (grant reqard number)</li>
+<li>UW logo</li>
+<li>ACES team (names)</li>
+</ul>
 <div class="footer footer-default">
 
 </div>

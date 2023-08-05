@@ -19,19 +19,45 @@ title-slide-attributes:
   data-background-color: "#1a1e43"
 ---
 
+## Is the past recoverable from the data?
 
-## Palaeoecological data
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r, vertical-spp-plot}
+#| fig-height: 10
+library(patchwork)
+library(ggtext)
+vertical_plot <- readRDS("./images/vertical_plot.rds")
+vertical_plot
+
+```
+
+:::
+::: {.column width="50%"}
+
+Palaeoecologists are concerned with questions such as:
+
+- what are the drivers of community change?
+- environment-species interactions?
+- role of density dependence and species interactions?
+- how can palaeoecological information inform present and future ecosystem states?
+
+:::
+::::
+
+
+## Palaeoecological proxy data
 
 - Typically comprise mulitple time-series (response): 
   - e.g., pollen, diatoms...
 - Include environmental covariates (predictors):
-  - e.g., isotopic data, lake level...
-
+  - e.g., isotopic data, charcoal data, lake level...
 
 Palaeoecological data pose many statistical challenges:
 
-- Time averaging
 - Uneven sampling through time
+- Time averaging
 - Measurement uncertainty
 - Relative abundances
 
@@ -44,17 +70,31 @@ Many descriptive approaches exist for analysing multivarivariate time-series:
 - Ordination: PCA, NMDS...
 - Machine learning: MVRT, LDA (fancy cluster analyses)
 
-Descriptive methods allow us to establish patterns but not determine potential causes of those patterns.
+<br>
 
-## Beyond pattern recognision
+**Descriptive methods allow us to extract patterns from the data but not determine potential causes of those patterns.**
 
-The cutting edge in palaeoecology is to establish potential causes of observed patterns in species relative abundances. Are observed patterns driven by:
+_Find image of cluster analysis_
+
+## Beyond pattern recognition
+
+The cutting edge in palaeoecology is to establish potential causes of observed patterns in species relative abundances. For example, are observed patterns driven by:
 
 - species interactions?
 - climate variability?
 - fire regime?
+- ...
 
-No easy task!
+This is what we want to know if we are to use palaeoecology to inform management of contemporary ecosystems or inform potential future ecosystem states. No easy task!
+
+## State-space modelling
+
+State-space modelling goes beyond descriptive approaches and attempts to estimate:
+
+- autoregressive / density dependent processes 
+- interspecific interactions ($C$ matrix)
+- species-environment interactions ($B$ vector)
+- combinations of the above
 
 
 ## State-space modelling
@@ -63,8 +103,11 @@ State-space modelling attempts to predict the "true" unobservable state of a sys
 
 <br>
 Process equation:
+
+**Something not right here Tony...:**
+
 $$
-z_t = z_{t-1} + \epsilon_t,   \epsilon_t \sim N(0, \sigma^2_p)
+Y = B0 + C(Y - B0 - BX) + BX
 $$
 
 and one that models the _observations_ from the system:
@@ -72,76 +115,161 @@ and one that models the _observations_ from the system:
 <br>
 
 Observation equation:
+
 $$
-y_t = z_y + n_t,   n_t \sim N(0, \sigma^2_o)
+Y_t = Multinomial(z_t)
 $$
 
 ## State-space modelling
 
-State-space modeling goes beyond descriptive approaches and attempts to estimate:
+State-space models are not new to ecology and have been used for:
 
-- autoregressive processes
-- species interactions
-- species-environment interactione
-- combinations of the above
+- estimating animal populations
+- animal movement
+- plant cover data
+- and much more
 
-Things get complicated when esimating multiple parameters simultaneously!
+However, state-space models are not well explored in palaeoecology.
 
 ## State-space modelling
 
-This variant of a state-space model:
+include eq on slide:
+
+This new variant of a state-space model:
 
 - uses a multinomial distribution: accepts raw count data
-- accepts multiple predictor data streams in the same model: e.g., isotopic data, charcoal accumulation rates...
+- accepts multiple predictor data streams in the same model: e.g., isotopic data, charcoal accumulation rates, fungal spores...
 - simultaneously fits multiple coefficients
 - models autocorrelation structure
-- assess a range of possible causes of observed patterns
+
+
+Can be used to assess a range of possible causes of observed patterns in palaeo-data.
 
 
 ## Empirical example
 
-Demonstrating a three-species model from Sunfish Pond:
+:::: {.columns}
 
-- unpublished data: not presenting the dataset, focusing on the modelling approach
-- In this example, the explanitory variable is time. I.e., we are looking at change in taxa over time. 
-- interested in abrupt transitions between dominant species
+::: {.column width="50%"}
+
+Demonstrating a three-taxon model from Sunfish Pond:
+
+- unpublished data: not presenting the dataset, focusing on the modelling approach (Johnson _et al.,_ unpub)
+
+- ACES project interested in abrupt transitions between dominant species
+
+:::
+
+::: {.column width="50%"}
 
 ```{r map}
 library(leaflet)
 m <- leaflet() %>%
   setView(lng = -76.6990733, lat = 41.6433326, zoom = 5) %>%
-  addMarkers(lng = -76.6990733, lat = 41.6433326, popup="Sunfish Pond")
-m %>% addTiles()
+  addMarkers(lng = -76.6990733, lat = 41.6433326, popup="Sunfish Pond") %>% addTiles()
+m
 ```
+:::
+::::
+
+## Jonathon Johnson (JJ)
+
+![](./images/johnson-jonathan-2020.jpg){fig-align="center"}
 
 ## Empirical example
 
+This example is a three-taxon model:
+
+- two focal species (_Betula_ and _Quercus_)
+- third 'species' is an aggregate of all other species
+- we fit species interactions
+- estimate species change through time
+
+Remember, this is a multinomial problem so the we do not estimate the aggregate species directly.
+
+## Time-forward model enables even intervals
+
 ```{r, plot}
+#| fig-align: center
+#| fig-cap: Johnson _et al.,_ unpublished
 library(patchwork)
+library(ggtext)
 two_spp_plt <- readRDS("./images/two_spp_plt.rds")
 two_spp_plt
 
 ```
 
 
-## Simulation evaluation
+## Empirical example estimates
 
-- We cannot determine the accuracy of fitted coefficients empirically from palaeoecological data. Experimental manipulation is challenging.
+:::: {.columns}
+::: {.column width="50%"}
+
+Estimates of species interactions:
+
+$C$ matrix
+
+```{r, summaryc}
+x <- readRDS("./data/betula_quercus.rds")
+# x$C
+
+c_mat <- x$C
+diag(c_mat) <- diag(c_mat) -1
+c_mat
+```
+
+- Columns are abundance and rows are change in abundance
+
+- Density dependence on the diagonal
+
+(Quercus .99 means change in quercus i
+  quercus-betula -0.7 means that abundance of quercus affects the change in betula abundance)
+
+<br>
+Estimate of change over time
+
+$B$ vector
+
+```{r, summaryb}
+x$B
+```
+:::
+::: {.column width="50%"}
+
+```{r, verticalplot}
+#| fig-height: 10
+library(patchwork)
+library(ggtext)
+vertical_ss_plot_1 <- readRDS("./images/vertical_ss_plot_1.rds")
+vertical_ss_plot_1
+
+```
+
+:::
+::::
+
+
+## Evaluating the model with simulated data
+
+- We cannot determine the accuracy of fitted coefficients empirically from palaeoecological data.
 
 - Simulation experiments are used to assess the success of recovering parameters:
   1. data are simulated under known conditions with replication
   2. the model is fit to the simulated replicate datasets
   3. fitted models are assessed for how well input parameters are recovered
 
-## Simulation evaluation
+## Evaluating the model with simulated data
 
-Example of recovering parameters for inter- intra- specific interactions:
+Replace with simulation results from betula quercus
 
 ## Hypothesis testing
+
+Link back to parameters themselves
 
 We cannot determine with certainty, outside of simulation, causation from palaeo-data.
 
 What we can do is:
+
 - set up multiple working hypothese (Chamberlin)
 - couple descriptive methods with inferrential ones
 - assess which results lend support to the likelihood of each hypothesis being true
@@ -150,3 +278,6 @@ What we can do is:
 
 ## Acknowledgements
 
+- NSF logo (grant reqard number)
+- UW logo
+- ACES team (names)
