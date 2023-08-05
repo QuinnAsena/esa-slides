@@ -39,7 +39,7 @@ vertical_plot
 Palaeoecologists are concerned with questions such as:
 
 - what are the drivers of community change?
-- environment-species interactions?
+- role species-environment interactions?
 - role of density dependence and species interactions?
 - how can palaeoecological information inform present and future ecosystem states?
 
@@ -200,12 +200,11 @@ two_spp_plt
 ```
 
 
-## Empirical example estimates
+## Species interaction estimates
 
 :::: {.columns}
 ::: {.column width="50%"}
 
-Estimates of species interactions:
 
 $C$ matrix
 
@@ -215,28 +214,61 @@ x <- readRDS("./data/betula_quercus.rds")
 
 c_mat <- x$C
 diag(c_mat) <- diag(c_mat) -1
-c_mat
+round(c_mat, 3)
 ```
 
-- Columns are abundance and rows are change in abundance
-
-- Density dependence on the diagonal
-
-(Quercus .99 means change in quercus i
-  quercus-betula -0.7 means that abundance of quercus affects the change in betula abundance)
-
 <br>
+
+- columns = abundance; rows = change in abundance
+
+- density dependence on the diagonal
+
+- _Quercus-Quercus_ near 0 means abundance of _Quercus_ has little affect on the change in _Quercus_
+
+- _Quercus-Betula_ -0.7 means that abundance of _Quercus_ affects the change in _Betula_ abundance
+
+
+:::
+::: {.column width="50%"}
+
+```{r, verticalplot}
+#| fig-height: 10
+library(patchwork)
+library(ggtext)
+vertical_ss_plot_1 <- readRDS("./images/vertical_ss_plot_1.rds")
+vertical_ss_plot_1
+
+```
+
+:::
+::::
+
+
+## Estimating the effect of covariates
+
+:::: {.columns}
+::: {.column width="50%"}
+
 Estimate of change over time
 
 $B$ vector
 
 ```{r, summaryb}
-x$B
+round(x$B, 3)
 ```
+
+<br>
+
+Overall:
+
+- _Quercus_ increases with time
+- _Betula_ decreases with time
+- estimates are relative!
+
 :::
 ::: {.column width="50%"}
 
-```{r, verticalplot}
+```{r, verticalplotb}
 #| fig-height: 10
 library(patchwork)
 library(ggtext)
@@ -260,7 +292,46 @@ vertical_ss_plot_1
 
 ## Evaluating the model with simulated data
 
-Replace with simulation results from betula quercus
+:::: {.columns}
+::: {.column width="50%"}
+
+$C$ matrix fit to the pollen data
+
+```{r, summarycsim}
+round(c_mat, 3)
+```
+<br>
+
+$B$ vector fit to the pollen data
+
+```{r, summarybsim}
+round(x$B, 3)
+```
+
+:::
+::: {.column width="50%"}
+
+$C$ matrix fit to the simulated data
+
+```{r, summarycdat}
+
+cat("oh")
+
+```
+<br>
+
+$B$ vector fit to the simulated data
+
+```{r, summarybdat}
+cat("no!")
+```
+
+- 100 reps
+- average difference between input and fitted parameters
+
+:::
+::::
+
 
 ## Hypothesis testing
 
@@ -270,7 +341,7 @@ We cannot determine with certainty, outside of simulation, causation from palaeo
 
 What we can do is:
 
-- set up multiple working hypothese (Chamberlin)
+- set up multiple working hypothese (Chamberlin, 1897)
 - couple descriptive methods with inferrential ones
 - assess which results lend support to the likelihood of each hypothesis being true
 

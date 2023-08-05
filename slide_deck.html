@@ -351,7 +351,7 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
   <p class="date">2023-08-05</p>
 </section>
 <section id="is-the-past-recoverable-from-the-data" class="slide level2">
-<h2>Is the past recoverable from the data</h2>
+<h2>Is the past recoverable from the data?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
@@ -363,7 +363,7 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
 <p>Palaeoecologists are concerned with questions such as:</p>
 <ul>
 <li>what are the drivers of community change?</li>
-<li>environment-species interactions?</li>
+<li>role species-environment interactions?</li>
 <li>role of density dependence and species interactions?</li>
 <li>how can palaeoecological information inform present and future ecosystem states?</li>
 </ul>
@@ -473,8 +473,8 @@ Y_t = Multinomial(z_t)
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-276774c547088a074ba7" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-276774c547088a074ba7">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-acc200aa492e9c36e460" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-acc200aa492e9c36e460">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -499,37 +499,57 @@ Y_t = Multinomial(z_t)
 <h2>Time-forward model enables even intervals</h2>
 
 <img data-src="slide_deck_files/figure-revealjs/plot-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Johnson <em>et al.,</em> unpublished</p></section>
-<section id="empirical-example-estimates" class="slide level2">
-<h2>Empirical example estimates</h2>
+<section id="species-interaction-estimates" class="slide level2">
+<h2>Species interaction estimates</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Estimates of species interactions:</p>
 <p><span class="math inline">\(C\)</span> matrix</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>              other      Quercus     Betula
-other   -0.07399272  0.000000000  0.0000000
-Quercus  0.00000000 -0.005562442  0.1214643
-Betula   0.00000000 -0.702066865 -0.4588237</code></pre>
+<pre><code>         other Quercus Betula
+other   -0.074   0.000  0.000
+Quercus  0.000  -0.006  0.121
+Betula   0.000  -0.702 -0.459</code></pre>
 </div>
 </div>
+<p><br></p>
 <ul>
-<li><p>Columns are abundance and rows are change in abundance</p></li>
-<li><p>Density dependence on the diagonal</p></li>
+<li><p>columns = abundance; rows = change in abundance</p></li>
+<li><p>density dependence on the diagonal</p></li>
+<li><p><em>Quercus-Quercus</em> near 0 means abundance of <em>Quercus</em> has little affect on the change in <em>Quercus</em></p></li>
+<li><p><em>Quercus-Betula</em> -0.7 means that abundance of <em>Quercus</em> affects the change in <em>Betula</em> abundance</p></li>
 </ul>
-<p>(Quercus .99 means change in quercus i quercus-betula -0.7 means that abundance of quercus affects the change in betula abundance)</p>
-<p><br> Estimate of change over time</p>
-<p><span class="math inline">\(B\)</span> vector</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code> other    Quercus     Betula
-     0 0.04790201 -0.5318416</code></pre>
-</div>
-</div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
 <p><img data-src="slide_deck_files/figure-revealjs/verticalplot-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="estimating-the-effect-of-covariates" class="slide level2">
+<h2>Estimating the effect of covariates</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Estimate of change over time</p>
+<p><span class="math inline">\(B\)</span> vector</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> other Quercus Betula
+     0   0.048 -0.532</code></pre>
+</div>
+</div>
+<p>Overall:</p>
+<ul>
+<li><em>Quercus</em> increases with time</li>
+<li><em>Betula</em> decreases with time</li>
+<li>estimates are relative!</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="slide_deck_files/figure-revealjs/verticalplotb-1.png" width="960"></p>
 </div>
 </div>
 </div>
@@ -549,7 +569,45 @@ Betula   0.00000000 -0.702066865 -0.4588237</code></pre>
 </section>
 <section id="evaluating-the-model-with-simulated-data-1" class="slide level2">
 <h2>Evaluating the model with simulated data</h2>
-<p>Replace with simulation results from betula quercus</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(C\)</span> matrix fit to the pollen data</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         other Quercus Betula
+other   -0.074   0.000  0.000
+Quercus  0.000  -0.006  0.121
+Betula   0.000  -0.702 -0.459</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><span class="math inline">\(B\)</span> vector fit to the pollen data</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> other Quercus Betula
+     0   0.048 -0.532</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(C\)</span> matrix fit to the simulated data</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>oh</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><span class="math inline">\(B\)</span> vector fit to the simulated data</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>no!</code></pre>
+</div>
+</div>
+<ul>
+<li>100 reps</li>
+<li>average difference between input and fitted parameters</li>
+</ul>
+</div>
+</div>
 </section>
 <section id="hypothesis-testing" class="slide level2">
 <h2>Hypothesis testing</h2>
