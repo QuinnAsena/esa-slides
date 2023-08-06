@@ -5,6 +5,8 @@ institute: "UW-Madison"
 date: today
 bibliography: refs.bib
 from: markdown+emoji
+# format: pptx
+# prefer-html: true
 format:
   revealjs:
     theme: dark
@@ -335,8 +337,6 @@ cat("no!")
 
 ## Hypothesis testing
 
-Link back to parameters themselves
-
 We cannot determine with certainty, outside of simulation, causation from palaeo-data.
 
 What we can do is:
@@ -345,10 +345,17 @@ What we can do is:
 - couple descriptive methods with inferrential ones
 - assess which results lend support to the likelihood of each hypothesis being true
 
-
+_Given the data at hand_ the interaction matrix ($C$) indicates some competition between _Quercus_ and _Betula_.  Such an inference lends support to one hypothesis.
 
 ## Acknowledgements
 
-- NSF logo (grant reqard number)
-- UW logo
-- ACES team (names)
+Aces team:
+- Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey, Adrian George, Bryan Schuman, David Nelson, Jonathon Johnson
+
+
+- National Science Foundation
+- UW-Madison
+
+::: footer
+![](./images/crest-color/crest-color/color-UWcrest-print.png){width=40} ![](./images/NSF_Official_logo_High_Res_1200ppi.png){width=70}
+:::
