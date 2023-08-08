@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.433">
 
   <meta name="author" content="Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson">
-  <meta name="dcterms.date" content="2023-08-06">
+  <meta name="dcterms.date" content="2023-08-08">
   <title>Modelling palaeoecological community data: a state-space approach</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -348,7 +348,7 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
     </div>
 </div>
 
-  <p class="date">2023-08-06</p>
+  <p class="date">2023-08-08</p>
 </section>
 <section id="is-the-past-recoverable-from-the-data" class="slide level2">
 <h2>Is the past recoverable from the data?</h2>
@@ -473,8 +473,8 @@ Y_t = Multinomial(z_t)
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7f6170c7b55b65f0c0e1" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-7f6170c7b55b65f0c0e1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3e78337ba75df8422747" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-3e78337ba75df8422747">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -593,18 +593,22 @@ Betula   0.000  -0.702 -0.459</code></pre>
 <p><span class="math inline">\(C\)</span> matrix fit to the simulated data</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>oh</code></pre>
+<pre><code>         other Quercus Betula
+other   -0.926   0.000  0.000
+Quercus  0.000  -0.071 -0.080
+Betula   0.000   0.243  0.233</code></pre>
 </div>
 </div>
 <p><br></p>
 <p><span class="math inline">\(B\)</span> vector fit to the simulated data</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>no!</code></pre>
+<pre><code>      other Quercus Betula
+other     0   0.039 -0.106</code></pre>
 </div>
 </div>
 <ul>
-<li>100 reps</li>
+<li>112 reps</li>
 <li>average difference between input and fitted parameters</li>
 </ul>
 </div>
