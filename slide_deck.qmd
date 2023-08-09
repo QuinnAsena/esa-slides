@@ -1,6 +1,6 @@
 ---
 title: "Modelling palaeoecological community data: a state-space approach"
-author: "Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson"
+author: "Quinn Asena, Anthony Ives, Jack Williams, and Jonathan Johnson"
 institute: "UW-Madison"
 date: today
 bibliography: refs.bib
@@ -27,9 +27,15 @@ title-slide-attributes:
 ```{r, vertical-spp-plot}
 #| fig-height: 10
 library(patchwork)
+library(ggplot2)
 library(ggtext)
 vertical_plot <- readRDS("./images/vertical_plot.rds")
-vertical_plot
+vertical_plot +
+  theme(
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    strip.text.x = element_markdown(size = 20)
+  )
 
 ```
 
@@ -39,8 +45,8 @@ vertical_plot
 Palaeoecologists are concerned with questions such as:
 
 - what are the drivers of community change?
-- role species-environment interactions?
-- role of density dependence and species interactions?
+- what role do  species-environment interactions play?
+- what role do density dependence and species interactions play?
 - how can palaeoecological information inform present and future ecosystem states?
 
 :::
@@ -49,22 +55,35 @@ Palaeoecologists are concerned with questions such as:
 
 ## Palaeoecological proxy data
 
-- Typically comprise mulitple time-series (response): 
+:::: {.columns}
+::: {.column width="50%"}
+
+Proxy data typically:
+
+-  comprise mulitple time-series (response): 
   - e.g., pollen, diatoms...
-- Include environmental covariates (predictors):
+- include environmental covariates (predictors):
   - e.g., isotopic data, charcoal data, lake level...
 
-Palaeoecological data pose many statistical challenges:
+:::
+::: {.column width="50%"}
+
+Pose many statistical challenges:
 
 - Uneven sampling through time
 - Time averaging
 - Measurement uncertainty
 - Relative abundances
 
+:::
+::::
 
 ## Descriptive approaches
 
-Many descriptive approaches exist for analysing multivarivariate time-series:
+:::: {.columns}
+::: {.column width="50%"}
+
+Many descriptive approaches exist for analysing multivariate time-series:
 
 - Cluster analyses: CONISS
 - Ordination: PCA, NMDS...
@@ -72,9 +91,17 @@ Many descriptive approaches exist for analysing multivarivariate time-series:
 
 <br>
 
-**Descriptive methods allow us to extract patterns from the data but not determine potential causes of those patterns.**
+**Descriptive methods allow us to see patterns in the data but not determine potential causes of those patterns.**
 
-_Find image of cluster analysis_
+:::
+::: {.column width="50%"}
+
+![Jensen _et al.,_ 2020](./images/jensen_coniss_crop.jpg){width="85%"}
+
+:::
+::::
+
+
 
 ## Beyond pattern recognition
 
@@ -104,10 +131,8 @@ State-space modelling attempts to predict the "true" unobservable state of a sys
 <br>
 Process equation:
 
-**Something not right here Tony...:**
-
 $$
-Y = B0 + C(Y - B0 - BX) + BX
+Z = B0 + C(Z_{t-1} - B0 - BX_{t-1}) + BX_t
 $$
 
 and one that models the _observations_ from the system:
@@ -117,7 +142,7 @@ and one that models the _observations_ from the system:
 Observation equation:
 
 $$
-Y_t = Multinomial(z_t)
+Y_t = Multinomial(Z_t)
 $$
 
 ## State-space modelling
@@ -133,7 +158,8 @@ However, state-space models are not well explored in palaeoecology.
 
 ## State-space modelling
 
-include eq on slide:
+:::: {.columns}
+::: {.column width="50%"}
 
 This new variant of a state-space model:
 
@@ -145,6 +171,25 @@ This new variant of a state-space model:
 
 Can be used to assess a range of possible causes of observed patterns in palaeo-data.
 
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+$$
+Z = B0 + C(Z_{t-1} - B0 - BX_{t-1}) + BX_t
+$$
+
+<br>
+
+
+$$
+Y_t = Multinomial(Z_t)
+$$
+
+:::
+::::
 
 ## Empirical example
 
@@ -185,9 +230,9 @@ This example is a three-taxon model:
 - we fit species interactions
 - estimate species change through time
 
-Remember, this is a multinomial problem so the we do not estimate the aggregate species directly.
+Remember, this is a multinomial problem which accounts for unavoidable correlations in frequency data.
 
-## Time-forward model enables even intervals
+## Time-forward model enables uneven intervals
 
 ```{r, plot}
 #| fig-align: center
@@ -210,7 +255,6 @@ $C$ matrix
 
 ```{r, summaryc}
 x <- readRDS("./data/betula_quercus.rds")
-# x$C
 
 c_mat <- x$C
 diag(c_mat) <- diag(c_mat) -1
@@ -223,8 +267,6 @@ round(c_mat, 3)
 
 - density dependence on the diagonal
 
-- _Quercus-Quercus_ near 0 means abundance of _Quercus_ has little affect on the change in _Quercus_
-
 - _Quercus-Betula_ -0.7 means that abundance of _Quercus_ affects the change in _Betula_ abundance
 
 
@@ -236,7 +278,12 @@ round(c_mat, 3)
 library(patchwork)
 library(ggtext)
 vertical_ss_plot_1 <- readRDS("./images/vertical_ss_plot_1.rds")
-vertical_ss_plot_1
+vertical_ss_plot_1 +
+  theme(
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    strip.text.x = element_markdown(size = 20)
+  )
 
 ```
 
@@ -263,7 +310,7 @@ Overall:
 
 - _Quercus_ increases with time
 - _Betula_ decreases with time
-- estimates are relative!
+- estimates are relative to "other" taxa
 
 :::
 ::: {.column width="50%"}
@@ -273,13 +320,17 @@ Overall:
 library(patchwork)
 library(ggtext)
 vertical_ss_plot_1 <- readRDS("./images/vertical_ss_plot_1.rds")
-vertical_ss_plot_1
+vertical_ss_plot_1 +
+  theme(
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    strip.text.x = element_markdown(size = 20)
+  )
 
 ```
 
 :::
 ::::
-
 
 ## Evaluating the model with simulated data
 
@@ -290,7 +341,119 @@ vertical_ss_plot_1
   2. the model is fit to the simulated replicate datasets
   3. fitted models are assessed for how well input parameters are recovered
 
+
 ## Evaluating the model with simulated data
+
+$C$ matrix estimates vs inputs
+
+```{r, summarycdat2}
+#| fig-align: "center"
+library(data.table)
+library(tidyverse)
+sim_fit <- readRDS("./data/sim_fit_bet_querc_2.rds")
+
+Cs <- lapply(sim_fit[[2]], \(x) {
+  tib <- as_tibble(x$C) %>%
+  mutate(row_pos = paste0("row_", 1:n())) %>%
+    pivot_longer(cols = -c(row_pos)) %>%
+  mutate(across(where(is.numeric), ~ ifelse(. == 0, NA, .)))
+})
+
+Cs_bind <- rbindlist(Cs)
+
+# ann_dat_text<-data.frame(     
+#     # Providing F as an annotation of Plot 1
+#     # and M as an annotation of Plot 2
+#     row_pos=c("row_2","row_3", "row_3", "row_2"),
+#     name = c("y2","y3", "y2", "y3"),
+#     label=c("-0.006","-0.459", "-0.121","-0.702"),
+#     value = c(2.5, 2.5, 2.5, 2.5)
+# )
+
+# ggplot(Cs_bind, aes(x = row_pos, y = value)) +
+#   # geom_hline(yintercept = c(-0.071, -0.080, 0.243, 0.233)) +
+#   geom_jitter() +
+#   labs(x = "Column", y = "Row") +
+#   facet_wrap(~name + row_pos) +
+#   # theme_minimal() +
+#   theme(
+#     strip.background = element_blank(),
+#     strip.text.x = element_blank(),
+#     axis.text.x = element_blank(),
+#     axis.ticks.x = element_blank()
+#   ) + 
+#   geom_text(
+#     data = ann_dat_text,
+#     label=ann_dat_text$label
+# )
+# 
+
+Cs_split <- group_split(Cs_bind, row_pos)
+
+ann_dat_text<-data.frame(     
+    # Providing F as an annotation of Plot 1
+    # and M as an annotation of Plot 2
+    row_pos=c("row_2","row_3", "row_3", "row_2"),
+    name = c("y2","y3", "y2", "y3"),
+    label=c("0.994","0.541", "-0.702","0.121"),
+    value = c(-1, 1.7, 1, 1.7)
+)
+
+p1 <- ggplot(Cs_split[[1]], aes(x = row_pos, y = value)) +
+  geom_jitter() +
+  labs(x = NULL, y = NULL) +
+  ylim(-2, 2) +
+  facet_wrap(~name + row_pos) +
+  # theme_minimal() +
+  theme(
+    strip.background = element_blank(),
+    strip.text.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+p2 <- ggplot(Cs_split[[2]], aes(x = row_pos, y = value)) +
+  geom_jitter() +
+  labs(x = NULL, y = "Row") +
+  ylim(-2, 2) +
+  facet_wrap(~name + row_pos) +
+  # theme_minimal() +
+  theme(
+    strip.background = element_blank(),
+    strip.text.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  ) + 
+  geom_text(
+    data = filter(ann_dat_text, row_pos %in% c("row_2")),
+    label=filter(ann_dat_text, row_pos %in% c("row_2"))$label
+)
+
+
+p3 <- ggplot(Cs_split[[3]], aes(x = row_pos, y = value)) +
+  geom_jitter() +
+  labs(x = "Column", y = NULL) +
+  ylim(-2, 2) +
+  facet_wrap(~name + row_pos) +
+  # theme_minimal() +
+  theme(
+    strip.background = element_blank(),
+    strip.text.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  ) + 
+  geom_text(
+    data = filter(ann_dat_text, row_pos %in% c("row_3")),
+    label=filter(ann_dat_text, row_pos %in% c("row_3"))$label
+)
+
+
+p1/p2/p3
+
+```
+
+
+## Evaluating the model with simulated data {visibility="hidden"}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -329,12 +492,13 @@ round(model_assess$ave[[2]][,,3], 3)[ 1, , drop = F]
 
 ```
 
+<br>
+
 - 112 reps
 - average difference between input and fitted parameters
 
 :::
 ::::
-
 
 ## Hypothesis testing
 
@@ -351,6 +515,7 @@ _Given the data at hand_ the interaction matrix ($C$) indicates some competition
 ## Acknowledgements
 
 Aces team:
+
 - Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey, Adrian George, Bryan Schuman, David Nelson, Jonathon Johnson
 
 
@@ -358,5 +523,5 @@ Aces team:
 - UW-Madison
 
 ::: footer
-![](./images/crest-color/crest-color/color-UWcrest-print.png){width=40} ![](./images/NSF_Official_logo_High_Res_1200ppi.png){width=70}
+![](./images/crest-color/crest-color/color-UWcrest-print.png){width=60} ![](./images/NSF_Official_logo_High_Res_1200ppi.png){width=100}
 :::

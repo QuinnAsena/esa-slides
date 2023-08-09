@@ -10,8 +10,8 @@
 <link href="slide_deck_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.433">
 
-  <meta name="author" content="Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson">
-  <meta name="dcterms.date" content="2023-08-08">
+  <meta name="author" content="Quinn Asena, Anthony Ives, Jack Williams, and Jonathan Johnson">
+  <meta name="dcterms.date" content="2023-08-09">
   <title>Modelling palaeoecological community data: a state-space approach</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -340,7 +340,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson 
+Quinn Asena, Anthony Ives, Jack Williams, and Jonathan Johnson 
 </div>
         <p class="quarto-title-affiliation">
             UW-Madison
@@ -348,7 +348,7 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
     </div>
 </div>
 
-  <p class="date">2023-08-08</p>
+  <p class="date">2023-08-09</p>
 </section>
 <section id="is-the-past-recoverable-from-the-data" class="slide level2">
 <h2>Is the past recoverable from the data?</h2>
@@ -363,8 +363,8 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
 <p>Palaeoecologists are concerned with questions such as:</p>
 <ul>
 <li>what are the drivers of community change?</li>
-<li>role species-environment interactions?</li>
-<li>role of density dependence and species interactions?</li>
+<li>what role do species-environment interactions play?</li>
+<li>what role do density dependence and species interactions play?</li>
 <li>how can palaeoecological information inform present and future ecosystem states?</li>
 </ul>
 </div>
@@ -372,35 +372,49 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
 </section>
 <section id="palaeoecological-proxy-data" class="slide level2">
 <h2>Palaeoecological proxy data</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Proxy data typically:</p>
 <ul>
-<li>Typically comprise mulitple time-series (response):
-<ul>
+<li>comprise mulitple time-series (response):</li>
 <li>e.g., pollen, diatoms…</li>
-</ul></li>
-<li>Include environmental covariates (predictors):
+<li>include environmental covariates (predictors):
 <ul>
 <li>e.g., isotopic data, charcoal data, lake level…</li>
 </ul></li>
 </ul>
-<p>Palaeoecological data pose many statistical challenges:</p>
+</div><div class="column" style="width:50%;">
+<p>Pose many statistical challenges:</p>
 <ul>
 <li>Uneven sampling through time</li>
 <li>Time averaging</li>
 <li>Measurement uncertainty</li>
 <li>Relative abundances</li>
 </ul>
+</div>
+</div>
 </section>
 <section id="descriptive-approaches" class="slide level2">
 <h2>Descriptive approaches</h2>
-<p>Many descriptive approaches exist for analysing multivarivariate time-series:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Many descriptive approaches exist for analysing multivariate time-series:</p>
 <ul>
 <li>Cluster analyses: CONISS</li>
 <li>Ordination: PCA, NMDS…</li>
 <li>Machine learning: MVRT, LDA (fancy cluster analyses)</li>
 </ul>
 <p><br></p>
-<p><strong>Descriptive methods allow us to extract patterns from the data but not determine potential causes of those patterns.</strong></p>
-<p><em>Find image of cluster analysis</em></p>
+<p><strong>Descriptive methods allow us to see patterns in the data but not determine potential causes of those patterns.</strong></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./images/jensen_coniss_crop.jpg" style="width:85.0%"></p>
+<figcaption>Jensen <em>et al.,</em> 2020</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="beyond-pattern-recognition" class="slide level2">
 <h2>Beyond pattern recognition</h2>
@@ -427,15 +441,14 @@ Quinn Asena, Anthony Ives, Jack Williams. and Jonathan Johnson
 <h2>State-space modelling</h2>
 <p>State-space modelling attempts to predict the “true” unobservable state of a system from observable variables. It does so via two equations, one that models the <em>process of the system</em>:</p>
 <p><br> Process equation:</p>
-<p><strong>Something not right here Tony…:</strong></p>
 <p><span class="math display">\[
-Y = B0 + C(Y - B0 - BX) + BX
+Z = B0 + C(Z_{t-1} - B0 - BX_{t-1}) + BX_t
 \]</span></p>
 <p>and one that models the <em>observations</em> from the system:</p>
 <p><br></p>
 <p>Observation equation:</p>
 <p><span class="math display">\[
-Y_t = Multinomial(z_t)
+Y_t = Multinomial(Z_t)
 \]</span></p>
 </section>
 <section id="state-space-modelling-2" class="slide level2">
@@ -451,7 +464,8 @@ Y_t = Multinomial(z_t)
 </section>
 <section id="state-space-modelling-3" class="slide level2">
 <h2>State-space modelling</h2>
-<p>include eq on slide:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>This new variant of a state-space model:</p>
 <ul>
 <li>uses a multinomial distribution: accepts raw count data</li>
@@ -460,6 +474,17 @@ Y_t = Multinomial(z_t)
 <li>models autocorrelation structure</li>
 </ul>
 <p>Can be used to assess a range of possible causes of observed patterns in palaeo-data.</p>
+</div><div class="column" style="width:50%;">
+<p><br></p>
+<p><span class="math display">\[
+Z = B0 + C(Z_{t-1} - B0 - BX_{t-1}) + BX_t
+\]</span></p>
+<p><br></p>
+<p><span class="math display">\[
+Y_t = Multinomial(Z_t)
+\]</span></p>
+</div>
+</div>
 </section>
 <section id="empirical-example" class="slide level2">
 <h2>Empirical example</h2>
@@ -473,8 +498,8 @@ Y_t = Multinomial(z_t)
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3e78337ba75df8422747" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-3e78337ba75df8422747">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b06bfa998e631f24bcf2" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b06bfa998e631f24bcf2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -493,10 +518,10 @@ Y_t = Multinomial(z_t)
 <li>we fit species interactions</li>
 <li>estimate species change through time</li>
 </ul>
-<p>Remember, this is a multinomial problem so the we do not estimate the aggregate species directly.</p>
+<p>Remember, this is a multinomial problem which accounts for unavoidable correlations in frequency data.</p>
 </section>
-<section id="time-forward-model-enables-even-intervals" class="slide level2">
-<h2>Time-forward model enables even intervals</h2>
+<section id="time-forward-model-enables-uneven-intervals" class="slide level2">
+<h2>Time-forward model enables uneven intervals</h2>
 
 <img data-src="slide_deck_files/figure-revealjs/plot-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Johnson <em>et al.,</em> unpublished</p></section>
 <section id="species-interaction-estimates" class="slide level2">
@@ -516,7 +541,6 @@ Betula   0.000  -0.702 -0.459</code></pre>
 <ul>
 <li><p>columns = abundance; rows = change in abundance</p></li>
 <li><p>density dependence on the diagonal</p></li>
-<li><p><em>Quercus-Quercus</em> near 0 means abundance of <em>Quercus</em> has little affect on the change in <em>Quercus</em></p></li>
 <li><p><em>Quercus-Betula</em> -0.7 means that abundance of <em>Quercus</em> affects the change in <em>Betula</em> abundance</p></li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -545,7 +569,7 @@ Betula   0.000  -0.702 -0.459</code></pre>
 <ul>
 <li><em>Quercus</em> increases with time</li>
 <li><em>Betula</em> decreases with time</li>
-<li>estimates are relative!</li>
+<li>estimates are relative to “other” taxa</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -570,50 +594,10 @@ Betula   0.000  -0.702 -0.459</code></pre>
 </section>
 <section id="evaluating-the-model-with-simulated-data-1" class="slide level2">
 <h2>Evaluating the model with simulated data</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><span class="math inline">\(C\)</span> matrix fit to the pollen data</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>         other Quercus Betula
-other   -0.074   0.000  0.000
-Quercus  0.000  -0.006  0.121
-Betula   0.000  -0.702 -0.459</code></pre>
-</div>
-</div>
-<p><br></p>
-<p><span class="math inline">\(B\)</span> vector fit to the pollen data</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code> other Quercus Betula
-     0   0.048 -0.532</code></pre>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<p><span class="math inline">\(C\)</span> matrix fit to the simulated data</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>         other Quercus Betula
-other   -0.926   0.000  0.000
-Quercus  0.000  -0.071 -0.080
-Betula   0.000   0.243  0.233</code></pre>
-</div>
-</div>
-<p><br></p>
-<p><span class="math inline">\(B\)</span> vector fit to the simulated data</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>      other Quercus Betula
-other     0   0.039 -0.106</code></pre>
-</div>
-</div>
-<ul>
-<li>112 reps</li>
-<li>average difference between input and fitted parameters</li>
-</ul>
-</div>
-</div>
-</section>
+<p><span class="math inline">\(C\)</span> matrix estimates vs inputs</p>
+
+<img data-src="slide_deck_files/figure-revealjs/summarycdat2-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+
 <section id="hypothesis-testing" class="slide level2">
 <h2>Hypothesis testing</h2>
 <p>We cannot determine with certainty, outside of simulation, causation from palaeo-data.</p>
@@ -627,13 +611,14 @@ other     0   0.039 -0.106</code></pre>
 </section>
 <section id="acknowledgements" class="slide level2">
 <h2>Acknowledgements</h2>
-<p>Aces team: - Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey, Adrian George, Bryan Schuman, David Nelson, Jonathon Johnson</p>
+<p>Aces team:</p>
 <ul>
-<li>National Science Foundation</li>
-<li>UW-Madison</li>
+<li><p>Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey, Adrian George, Bryan Schuman, David Nelson, Jonathon Johnson</p></li>
+<li><p>National Science Foundation</p></li>
+<li><p>UW-Madison</p></li>
 </ul>
 <div class="footer">
-<p><img data-src="./images/crest-color/crest-color/color-UWcrest-print.png" width="40"> <img data-src="./images/NSF_Official_logo_High_Res_1200ppi.png" width="70"></p>
+<p><img data-src="./images/crest-color/crest-color/color-UWcrest-print.png" width="60"> <img data-src="./images/NSF_Official_logo_High_Res_1200ppi.png" width="100"></p>
 </div>
 <div class="footer footer-default">
 
