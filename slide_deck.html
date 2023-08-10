@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.433">
 
   <meta name="author" content="Quinn Asena, Anthony Ives, Jack Williams, and Jonathan Johnson">
-  <meta name="dcterms.date" content="2023-08-09">
+  <meta name="dcterms.date" content="2023-08-10">
   <title>Modelling palaeoecological community data: a state-space approach</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -348,7 +348,7 @@ Quinn Asena, Anthony Ives, Jack Williams, and Jonathan Johnson
     </div>
 </div>
 
-  <p class="date">2023-08-09</p>
+  <p class="date">2023-08-10</p>
 </section>
 <section id="is-the-past-recoverable-from-the-data" class="slide level2">
 <h2>Is the past recoverable from the data?</h2>
@@ -473,7 +473,6 @@ Y_t = Multinomial(Z_t)
 <li>simultaneously fits multiple coefficients</li>
 <li>models autocorrelation structure</li>
 </ul>
-<p>Can be used to assess a range of possible causes of observed patterns in palaeo-data.</p>
 </div><div class="column" style="width:50%;">
 <p><br></p>
 <p><span class="math display">\[
@@ -485,6 +484,8 @@ Y_t = Multinomial(Z_t)
 \]</span></p>
 </div>
 </div>
+<p><br></p>
+<p><strong>Can be used to assess a range of possible causes of observed patterns in palaeo-data.</strong></p>
 </section>
 <section id="empirical-example" class="slide level2">
 <h2>Empirical example</h2>
@@ -498,8 +499,8 @@ Y_t = Multinomial(Z_t)
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b06bfa998e631f24bcf2" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-b06bfa998e631f24bcf2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5c1e76e4c6deae074dc4" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5c1e76e4c6deae074dc4">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[41.6433326,-76.69907329999999],5,[]],"calls":[{"method":"addMarkers","args":[41.6433326,-76.69907329999999,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Sunfish Pond",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"limits":{"lat":[41.6433326,41.6433326],"lng":[-76.69907329999999,-76.69907329999999]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -613,7 +614,7 @@ Betula   0.000  -0.702 -0.459</code></pre>
 <h2>Acknowledgements</h2>
 <p>Aces team:</p>
 <ul>
-<li><p>Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey, Adrian George, Bryan Schuman, David Nelson, Jonathon Johnson</p></li>
+<li><p>Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey Bryan Schuman, David Nelson, Jonathon Johnson</p></li>
 <li><p>National Science Foundation</p></li>
 <li><p>UW-Madison</p></li>
 </ul>

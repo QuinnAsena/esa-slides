@@ -168,9 +168,6 @@ This new variant of a state-space model:
 - simultaneously fits multiple coefficients
 - models autocorrelation structure
 
-
-Can be used to assess a range of possible causes of observed patterns in palaeo-data.
-
 :::
 
 ::: {.column width="50%"}
@@ -183,13 +180,17 @@ $$
 
 <br>
 
-
 $$
 Y_t = Multinomial(Z_t)
 $$
 
 :::
 ::::
+
+<br>
+
+**Can be used to assess a range of possible causes of observed patterns in palaeo-data.**
+
 
 ## Empirical example
 
@@ -516,7 +517,7 @@ _Given the data at hand_ the interaction matrix ($C$) indicates some competition
 
 Aces team:
 
-- Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey, Adrian George, Bryan Schuman, David Nelson, Jonathon Johnson
+- Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey Bryan Schuman, David Nelson, Jonathon Johnson
 
 
 - National Science Foundation
