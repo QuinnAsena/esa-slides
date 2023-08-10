@@ -515,7 +515,7 @@ _Given the data at hand_ the interaction matrix ($C$) indicates some competition
 
 ## Acknowledgements
 
-Aces team:
+ACES team:
 
 - Jack Williams, Tony Ives, Angie Perotti, Nora Schlenker, Sam Wiles, Amanda Toomey Bryan Schuman, David Nelson, Jonathon Johnson
 
